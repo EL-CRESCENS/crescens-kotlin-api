@@ -1,0 +1,25 @@
+<configuration>
+    <!-- Suppress internal Logback logging at INFO level -->
+    <statusListener class="ch.qos.logback.core.status.NopStatusListener" />
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                 %cyan(%d{YYYY-MM-dd HH:mm:ss.SSS}) %cyan(%level) %green([%logger{0}]): %cyan(%msg%n)
+            </pattern>
+        </encoder>
+    </appender>
+    <root level="trace">
+        <appender-ref ref="STDOUT"/>
+    </root>
+    <!-- Define specific log levels for packages -->
+    <logger name="org.eclipse.jetty" level="INFO"/>
+    <logger name="io.netty" level="INFO"/>
+    <logger name="io.ktor" level="INFO"/>
+    <!-- MongoDB driver logs -->
+    <logger name="org.mongodb.driver" level="INFO"/> <!-- Logs connection events -->
+    <logger name="org.mongodb.driver.cluster" level="OFF"/>    <!-- Logs cluster events -->
+    <logger name="org.mongodb.driver.client" level="OFF"/>
+    <!-- Set log level for velocity package to INFO -->
+    <logger name="org.apache.velocity" level="INFO" />
+    <logger name="org.apache.velocity.deprecation" level="OFF" />
+</configuration>

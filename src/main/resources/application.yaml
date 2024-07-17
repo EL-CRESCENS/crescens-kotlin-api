@@ -1,0 +1,7 @@
+ktor:
+  application:
+    modules:
+      - app.ApplicationKt.module
+  deployment:
+    host: localhost
+    port: 4000

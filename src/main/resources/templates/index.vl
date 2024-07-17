@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crescens API</title>
+    <style>
+        body {
+            background-color: #333333; /* Dark grey */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            color: #F72798; /* Futuristic pink */
+        }
+        h1 {
+            position: relative;
+            font-size: 3em;
+            text-align: center;
+            animation: glitch 2s infinite;
+            color: #000; /* Black font */
+        }
+        h1::before, h1::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            color: #F72798; /* Pink for glitch effect */
+            background: inherit;
+            overflow: hidden;
+            clip: rect(0, 900px, 0, 0);
+        }
+        h1::before {
+            left: 2px;
+            text-shadow: -2px 0 #ff4dff;
+            animation: glitch-before 2s infinite;
+        }
+        h1::after {
+            left: -2px;
+            text-shadow: -2px 0 #ff4dff;
+            animation: glitch-after 2s infinite;
+        }
+
+        @keyframes glitch {
+            0%, 100% {
+                clip: rect(0, auto, 0, 0);
+            }
+            10% {
+                clip: rect(54px, auto, 73px, 0);
+            }
+            20% {
+                clip: rect(23px, auto, 54px, 0);
+            }
+            30% {
+                clip: rect(31px, auto, 32px, 0);
+            }
+            40% {
+                clip: rect(2px, auto, 70px, 0);
+            }
+            50% {
+                clip: rect(75px, auto, 60px, 0);
+            }
+            60% {
+                clip: rect(48px, auto, 11px, 0);
+            }
+            70% {
+                clip: rect(89px, auto, 89px, 0);
+            }
+            80% {
+                clip: rect(27px, auto, 22px, 0);
+            }
+            90% {
+                clip: rect(61px, auto, 85px, 0);
+            }
+        }
+
+        @keyframes glitch-before {
+            0%, 100% {
+                clip: rect(0, auto, 0, 0);
+            }
+            10% {
+                clip: rect(71px, auto, 91px, 0);
+            }
+            20% {
+                clip: rect(5px, auto, 5px, 0);
+            }
+            30% {
+                clip: rect(15px, auto, 41px, 0);
+            }
+            40% {
+                clip: rect(10px, auto, 52px, 0);
+            }
+            50% {
+                clip: rect(12px, auto, 40px, 0);
+            }
+            60% {
+                clip: rect(23px, auto, 44px, 0);
+            }
+            70% {
+                clip: rect(20px, auto, 99px, 0);
+            }
+            80% {
+                clip: rect(17px, auto, 33px, 0);
+            }
+            90% {
+                clip: rect(49px, auto, 66px, 0);
+            }
+        }
+
+        @keyframes glitch-after {
+            0%, 100% {
+                clip: rect(0, auto, 0, 0);
+            }
+            10% {
+                clip: rect(59px, auto, 78px, 0);
+            }
+            20% {
+                clip: rect(9px, auto, 9px, 0);
+            }
+            30% {
+                clip: rect(51px, auto, 67px, 0);
+            }
+            40% {
+                clip: rect(22px, auto, 11px, 0);
+            }
+            50% {
+                clip: rect(18px, auto, 80px, 0);
+            }
+            60% {
+                clip: rect(35px, auto, 14px, 0);
+            }
+            70% {
+                clip: rect(77px, auto, 88px, 0);
+            }
+            80% {
+                clip: rect(75px, auto, 55px, 0);
+            }
+            90% {
+                clip: rect(61px, auto, 45px, 0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1 data-text="Hello, Welcome to Crescens API!">Hello, Welcome to Crescens API!</h1>
+</body>
+</html>
