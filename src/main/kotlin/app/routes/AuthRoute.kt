@@ -50,8 +50,8 @@ fun Route.authRoute() {
                 val ipAddress = call.request.origin.remoteHost
                 breadcrumb.log("[AUTH_ROUTE]: CLIENT IP: $ipAddress")
 
+                breadcrumb.log("[AUTH_ROUTE]: Getting request body...")
                 val reqBody = LoginRequest.fromJson(call.getBodyAsJson())
-                breadcrumb.log("[AUTH_ROUTE]: REQUEST BODY: $reqBody")
 
                 val loginResponse = authService.login(breadcrumb, reqBody, ipAddress)
 

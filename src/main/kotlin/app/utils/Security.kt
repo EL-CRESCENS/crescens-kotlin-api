@@ -1,11 +1,13 @@
 package app.utils
 
+import app.models.Token
 import app.models.User
 import app.plugins.dotenv
 import app.repositories.*
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import com.auth0.jwt.exceptions.JWTVerificationException
+import com.auth0.jwt.interfaces.DecodedJWT
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
@@ -38,12 +40,7 @@ suspend fun validatePrincipal(breadcrumb: Breadcrumb, call: ApplicationCall): Us
         if (ipAddress != token.ipAddress) throw Throwable("Unauthorized")
 
         // Verify and decode the token from the token data from database
-        val jwtVerifier = JWT
-            .require(Algorithm.HMAC256(dotenv["JWT_SECRET"]))
-            .withAudience(dotenv["JWT_AUDIENCE"])
-            .withIssuer(dotenv["JWT_ISSUER"])
-            .build()
-        val decodedJWT = jwtVerifier.verify(token.token)
+        val decodedJWT = jwtVerify(token)
 
         // Extract userId from the token and find user data in database
         val userId = decodedJWT.getClaim("_id").asString()
@@ -97,22 +94,43 @@ suspend fun refreshToken(breadcrumb: Breadcrumb, userToken: String, userTokenId:
 }
 
 fun createUserJwtToken(user: User, expTimeInSeconds: Long): String {
-    return JWT.create()
-        .withAudience(dotenv["JWT_AUDIENCE"])
-        .withIssuer(dotenv["JWT_ISSUER"])
-        .withClaim("_id", user._id)
-        .withClaim("exp", expTimeInSeconds)
-        .sign(Algorithm.HMAC256(dotenv["JWT_SECRET"]))
+    try {
+        return JWT.create()
+            .withAudience(dotenv["JWT_AUDIENCE"])
+            .withIssuer(dotenv["JWT_ISSUER"])
+            .withClaim("_id", user._id)
+            .withClaim("exp", expTimeInSeconds)
+            .sign(Algorithm.HMAC256(dotenv["JWT_SECRET"]))
+    } catch (e: Throwable) {
+        throw e
+    }
 }
 
 fun createJwtToken(string: String): String {
-    val currentTimeInSeconds = System.currentTimeMillis() / 1000
-    val expTimeInSeconds = currentTimeInSeconds + 86400 // 24hrs
+    try {
+        val currentTimeInSeconds = System.currentTimeMillis() / 1000
+        val expTimeInSeconds = currentTimeInSeconds + 86400 // 24hrs
 
-    return JWT.create()
-        .withAudience(dotenv["JWT_AUDIENCE"])
-        .withIssuer(dotenv["JWT_ISSUER"])
-        .withClaim("tokenId", string)
-        .withClaim("exp", expTimeInSeconds)
-        .sign(Algorithm.HMAC256(dotenv["JWT_SECRET"]))
+        return JWT.create()
+            .withAudience(dotenv["JWT_AUDIENCE"])
+            .withIssuer(dotenv["JWT_ISSUER"])
+            .withClaim("tokenId", string)
+            .withClaim("exp", expTimeInSeconds)
+            .sign(Algorithm.HMAC256(dotenv["JWT_SECRET"]))
+    } catch (e: Throwable) {
+        throw e
+    }
+}
+
+fun jwtVerify(token: Token): DecodedJWT {
+    try {
+        val jwtVerifier = JWT
+            .require(Algorithm.HMAC256(dotenv["JWT_SECRET"]))
+            .withAudience(dotenv["JWT_AUDIENCE"])
+            .withIssuer(dotenv["JWT_ISSUER"])
+            .build()
+        return jwtVerifier.verify(token.token)
+    } catch (e: Throwable) {
+        throw e
+    }
 }
