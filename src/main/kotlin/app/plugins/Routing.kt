@@ -10,6 +10,7 @@ fun Application.initializeRouting(breadcrumb: Breadcrumb) {
     healthCheck()
     routing {
         route(dotenv["APP_URL_PREFIX"]) {
+            githubRoute()
             authRoute()
 //            userRoute()
         }
