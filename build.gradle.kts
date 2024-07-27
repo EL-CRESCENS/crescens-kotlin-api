@@ -11,6 +11,7 @@ plugins {
     kotlin("jvm") version "2.0.0"
     id("io.ktor.plugin") version "2.3.12"
     id("org.jetbrains.kotlin.plugin.serialization") version "2.0.0"
+    id("com.google.cloud.tools.jib") version "3.4.3"
 }
 
 group = "example.com"
@@ -68,4 +69,24 @@ dependencies {
     implementation("io.github.microutils:kotlin-logging:3.0.5")
     implementation("joda-time:joda-time:2.12.7")
     implementation("org.mindrot:jbcrypt:0.4")
+}
+
+application {
+    mainClass.set("app.ApplicationKt")
+}
+
+jib {
+//    from {
+//        image = "docker://openjdk:21"
+//    }
+    to {
+        image = "133154459146.dkr.ecr.ap-southeast-1.amazonaws.com/crescens-kotlin-test"
+        auth {
+            username = "AWS"
+            password = System.getenv("AWS_SECRET_ACCESS_KEY")
+        }
+    }
+    container {
+        mainClass = "app.ApplicationKt"
+    }
 }
