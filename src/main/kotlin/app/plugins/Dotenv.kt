@@ -8,6 +8,6 @@ fun initializeDotenv(breadcrumb: Breadcrumb) {
     breadcrumb.log("Dotenv initializing...")
     dotenv = Dotenv
         .configure()
-        .directory("src/main/resources/.env") // Specify the correct directory
+        .directory("app/resources/.env") // Specify the correct directory
         .load()
 }
