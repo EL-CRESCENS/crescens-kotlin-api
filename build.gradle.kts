@@ -88,5 +88,6 @@ jib {
     }
     container {
         mainClass = "app.ApplicationKt"
+        ports = listOf("80")
     }
 }
