@@ -8,11 +8,13 @@ lateinit var dotenv: Dotenv
 fun initializeDotenv(breadcrumb: Breadcrumb) {
     breadcrumb.log("Dotenv initializing...")
     dotenv = try {
+        // Load env in container environment
         Dotenv
             .configure()
             .directory("app/resources/.env")
             .load()
     } catch (e: DotenvException) {
+        // Load env in local environment
         Dotenv.load()
     }
 }
