@@ -13,9 +13,6 @@ fun initializeDotenv(breadcrumb: Breadcrumb) {
             .directory("app/resources/.env")
             .load()
     } catch (e: DotenvException) {
-        Dotenv
-            .configure()
-            .directory("src/main/resources/.env")
-            .load()
+        Dotenv.load()
     }
 }
