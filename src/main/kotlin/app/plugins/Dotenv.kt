@@ -7,13 +7,12 @@ import io.github.cdimascio.dotenv.DotenvException
 lateinit var dotenv: Dotenv
 fun initializeDotenv(breadcrumb: Breadcrumb) {
     breadcrumb.log("Dotenv initializing...")
-    Dotenv.load()
-//    dotenv = try {
-//        Dotenv
-//            .configure()
-//            .directory("app/resources/.env")
-//            .load()
-//    } catch (e: DotenvException) {
-//        Dotenv.load()
-//    }
+    dotenv = try {
+        Dotenv
+            .configure()
+            .directory("app/resources/.env")
+            .load()
+    } catch (e: DotenvException) {
+        Dotenv.load()
+    }
 }
