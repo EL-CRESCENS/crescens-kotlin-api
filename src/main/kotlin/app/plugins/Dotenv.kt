@@ -2,12 +2,19 @@ package app.plugins
 
 import app.utils.Breadcrumb
 import io.github.cdimascio.dotenv.Dotenv
+import io.github.cdimascio.dotenv.DotenvException
 
 lateinit var dotenv: Dotenv
 fun initializeDotenv(breadcrumb: Breadcrumb) {
     breadcrumb.log("Dotenv initializing...")
-    dotenv = Dotenv
-        .configure()
-        .directory("src/main/resources/.env") // Specify the correct directory
-        .load()
+    dotenv = try {
+        // Load env in container environment
+        Dotenv
+            .configure()
+            .directory("app/resources/.env")
+            .load()
+    } catch (e: DotenvException) {
+        // Load env in local environment
+        Dotenv.load()
+    }
 }

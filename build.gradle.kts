@@ -76,17 +76,18 @@ application {
 }
 
 jib {
-//    from {
-//        image = "docker://openjdk:21"
-//    }
+    from {
+        image = "openjdk:17-jdk-alpine"
+    }
     to {
         image = "133154459146.dkr.ecr.ap-southeast-1.amazonaws.com/crescens-kotlin-test"
-        auth {
-            username = "AWS"
-            password = System.getenv("AWS_SECRET_ACCESS_KEY")
-        }
+//        auth {
+//            username = "AWS"
+//            password = System.getenv("AWS_SECRET_ACCESS_KEY")
+//        }
     }
     container {
         mainClass = "app.ApplicationKt"
+        ports = listOf("80")
     }
 }
